@@ -1,0 +1,9 @@
+.myBtn {
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid teal;
+    border-radius: 5px;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+}
