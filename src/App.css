@@ -25,3 +25,20 @@
   border: 1px solid teal;
   border-radius: 10px;
 }
+
+.page_wrapper {
+  display: flex;
+  margin: 20px 20px 20px 0px;
+}
+
+.page {
+  margin: 5px;
+  padding: 10px 15px;
+  border: 1px solid #535bf2;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.page_current {
+  border: 2px solid orange;
+}

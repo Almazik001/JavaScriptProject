@@ -8,19 +8,27 @@ import PostService from "./companent/API/PostService.js";
 import {useFetching} from "./hooks/useFetching.js";
 import Loading from "./companent/UI/MyLoading/Loading.jsx";
 
+import {getPagesCount} from "./utils/pages.jsx";
+import Pagination from "./companent/UI/Pagination.jsx";
+
 function App() {
 
     const [posts, setPosts] = useState([])
     const [modal, setModal] = useState(false)
+    const [totalPages, setTotalPages] = useState(0)
+    const [limit, setLimit] = useState(10)
+    const [page, setPage] = useState(1)
 
     const [fetchPost, postLoading, postError] = useFetching( async () => {
-        const response = await PostService.getAll()
+        const response = await PostService.getAll(limit, page)
         setPosts(response.data)
+        const totalCount = response.headers['x-total-count']
+        setTotalPages(getPagesCount(totalCount, limit))
     })
 
     useEffect(() => {
-        fetchPost()
-    }, []);
+        fetchPost(limit, page)
+    }, [page]);
 
 
     const createPost = (newPost) => {
@@ -30,6 +38,10 @@ function App() {
 
     const removePost = (post) => {
         setPosts([...posts.filter(p => p.id !== post.id)])
+    }
+
+    const changePage = (page) => {
+        setPage(page)
     }
 
     return (
@@ -51,6 +63,7 @@ function App() {
                 :
                 <PostList posts={posts} remove={removePost} title='JavaScript'/>
             }
+            <Pagination page={page} changePage={changePage} totalPages={totalPages}/>
         </div>
     )
     }
